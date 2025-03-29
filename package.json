@@ -1,0 +1,71 @@
+{
+  "name": "n8n-nodes-deepgram",
+  "version": "0.1.0",
+  "description": "n8n community nodes for Deepgram",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "author": {
+    "name": "Walid Boudabbous",
+    "email": "walid@acceleate.com"
+  },
+  "homepage": "https://github.com/Walid-Azur/n8n-nodes-deepgram",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Walid-Azur/n8n-nodes-deepgram.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Walid-Azur/n8n-nodes-deepgram/issues"
+  },
+  "engines": {
+    "node": ">=18.10",
+    "pnpm": ">=9.1"
+  },
+  "packageManager": "pnpm@9.1.4",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ExampleCredentialsApi.credentials.js",
+      "dist/credentials/HttpBinApi.credentials.js",
+      "dist/credentials/DudoxxLlmApi.credentials.js",
+      "dist/credentials/DeepgramApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/ExampleNode/ExampleNode.node.js",
+      "dist/nodes/HttpBin/HttpBin.node.js",
+      "dist/nodes/DudoxxLlmNode/DudoxxLlmNode.node.js",
+      "dist/nodes/DeepgramTranscriber/DeepgramTranscriber.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-jsdoc": "^50.6.9",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "n8n-workflow": "*",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^3.11.3"
+  }
+}

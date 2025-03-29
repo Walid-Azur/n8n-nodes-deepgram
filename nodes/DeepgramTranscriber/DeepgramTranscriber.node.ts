@@ -114,6 +114,29 @@ export class DeepgramTranscriber implements INodeType {
 				description: 'Specify additional transcription parameters (e.g., language, punctuate, diarize). Refer to Deepgram documentation.',
 				options: [
 					{
+						displayName: 'Callback URL',
+						name: 'callback',
+						type: 'string',
+						default: '',
+						placeholder: 'https://your-webhook-url.com',
+						description: 'URL to send results when transcription is complete (asynchronous)',
+					},
+					{
+						displayName: 'Diarize',
+						name: 'diarize',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to identify different speakers',
+					},
+					{
+						displayName: 'Keywords',
+						name: 'keywords',
+						type: 'string',
+						default: '',
+						placeholder: 'word1:boost,word2:boost',
+						description: 'Keywords to boost, format: keyword:boost_value (e.g., n8n:1.5)',
+					},
+					{
 						displayName: 'Language',
 						name: 'language',
 						type: 'string',
@@ -128,35 +151,11 @@ export class DeepgramTranscriber implements INodeType {
 						description: 'Whether to add punctuation and capitalization',
 					},
 					{
-						displayName: 'Diarize',
-						name: 'diarize',
-						type: 'boolean',
-						default: false,
-						description: 'Whether to identify different speakers',
-					},
-					{
 						displayName: 'Smart Format',
 						name: 'smart_format',
 						type: 'boolean',
 						default: true,
 						description: 'Whether to apply smart formatting (dates, numbers, etc.)',
-					},
-					// Add more common options as needed, or guide user to docs
-					{
-						displayName: 'Keywords',
-						name: 'keywords',
-						type: 'string',
-						default: '',
-						placeholder: 'word1:boost,word2:boost',
-						description: 'Keywords to boost, format: keyword:boost_value (e.g., n8n:1.5)',
-					},
-					{
-						displayName: 'Callback URL',
-						name: 'callback',
-						type: 'string',
-						default: '',
-						placeholder: 'https://your-webhook-url.com',
-						description: 'URL to send results when transcription is complete (asynchronous)',
 					},
 					// ... other options like utterances, redact, detect_language, etc.
 				],

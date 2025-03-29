@@ -1,46 +1,76 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-deepgram
 
-# n8n-nodes-starter
+This is an n8n community node package for interacting with the [Deepgram](https://deepgram.com/) API.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](n8n.io). It includes the node linter and other dependencies.
+It currently includes the following node:
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+*   **Deepgram Transcriber:** Transcribes pre-recorded audio files using the Deepgram API. Supports providing audio via URL or binary file input.
 
-## Prerequisites
+[n8n](https://n8n.io/) is a fair-code licensed workflow automation platform.
 
-You need the following installed on your development machine:
+[Installation](#installation)
+[Operations](#operations)
+[Credentials](#credentials)
+[Compatibility](#compatibility)
+[Usage](#usage)
+[Resources](#resources)
+[License](#license)
 
-* [git](https://git-scm.com/downloads)
-* Node.js and pnpm. Minimum version Node 18. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  pnpm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## Installation
 
-## Using this starter
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+1.  Go to **Settings > Community Nodes**.
+2.  Select **Install**.
+3.  Enter `n8n-nodes-deepgram` in the **Enter package name** field.
+4.  Agree to the risks of using community nodes: select **I understand the risks, and I want to proceed**.
+5.  Select **Install**.
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `pnpm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `pnpm lint` to check for errors or `pnpm lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+After installing the node, you can use it like any other node. n8n displays the node in the node panel under **Community** > **Installed**.
 
-## More information
+## Operations
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+*   **Deepgram Transcriber:**
+    *   Transcribe audio from a public URL.
+    *   Transcribe audio from an n8n binary file property.
+    *   Supports various Deepgram models (including Nova 2 and Nova 3).
+    *   Allows specifying additional options like language, punctuation, diarization, smart formatting, keywords, and callback URL.
+    *   Optionally append metadata (endpoint, parameters, duration) to the output.
+    *   Choose between outputting the full raw transcript or just the transcript text.
+
+## Credentials
+
+Requires Deepgram API credentials.
+
+1.  Go to your [Deepgram Console](https://console.deepgram.com/).
+2.  Navigate to **API Keys**.
+3.  Create a new API key or use an existing one.
+4.  In n8n, create new credentials for the Deepgram Transcriber node.
+5.  Enter your Deepgram API Key.
+6.  (Optional) If using a self-hosted or custom Deepgram endpoint, enter the Base URL.
+
+## Compatibility
+
+Tested with n8n version 1.x.
+
+## Usage
+
+1.  Install the package in your n8n instance.
+2.  Add the **Deepgram Transcriber** node to your workflow.
+3.  Configure the node properties:
+    *   Select the **Input Source Type** (URL or Binary File).
+    *   Provide the **Audio URL** or **Binary Property** name.
+    *   Choose the desired **Model**.
+    *   Configure **Additional Options** as needed (language, punctuate, etc.).
+    *   Select the **Output Format**.
+4.  Connect the node and run your workflow.
+
+## Resources
+
+*   [n8n Community Nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+*   [Deepgram API Documentation](https://developers.deepgram.com/docs)
+*   [GitHub Repository: Walid-Azur/n8n-nodes-deepgram](https://github.com/Walid-Azur/n8n-nodes-deepgram)
 
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+[MIT](LICENSE.md)

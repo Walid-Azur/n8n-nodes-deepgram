@@ -85,7 +85,8 @@ Tested with n8n version 1.x.
     *   Choose the desired **Voice Model**.
     *   Configure **Audio Options** (encoding, container, sample rate, bit rate) as needed.
     *   Specify the **Output Binary Property** name where the audio data will be stored (defaults to `data`).
-4.  Connect the node and run your workflow. The output item will contain the generated audio in the specified binary property.
+    *   (Optional) Provide an **Output Filename** (e.g., `speech.mp3`). If left empty, a default filename based on the output format will be used (e.g., `deepgram_output.mp3`).
+4.  Connect the node and run your workflow. The output item will contain the generated audio in the specified binary property, including the filename.
 
 ## Resources
 

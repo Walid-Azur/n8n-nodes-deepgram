@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deepgram",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "n8n community nodes for Deepgram",
   "keywords": [
     "n8n-community-node-package"

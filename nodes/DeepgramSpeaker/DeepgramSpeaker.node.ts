@@ -9,7 +9,7 @@ import {
 } from 'n8n-workflow';
 
 import { DeepgramClientOptions, createClient } from '@deepgram/sdk';
-// import { Readable } from 'stream'; // No longer needed directly
+import { Readable } from 'stream'; // Import Readable
 
 // Helper function from Deepgram docs to convert stream to buffer
 // Note: This might need adjustment based on how n8n expects binary data creation
@@ -101,7 +101,7 @@ export class DeepgramSpeaker implements INodeType {
 			},
 			// --- Audio Output Options ---
 			{
-				displayName: 'Audio Options', // Fixed Title Case
+				displayName: 'Audio Options', // Intentionally re-typed
 				name: 'audioOptions',
 				type: 'collection',
 				placeholder: 'Add Audio Option',
@@ -113,10 +113,9 @@ export class DeepgramSpeaker implements INodeType {
 						name: 'encoding',
 						type: 'options',
 						options: [
-							{ name: 'MP3 (Default)', value: 'mp3' }, // Assuming mp3 is default if not specified
+							{ name: 'MP3 (Default)', value: 'mp3' },
 							{ name: 'Linear16', value: 'linear16' },
-							{ name: 'Mu-law', value: 'mulaw' },
-							// Add others if known/needed
+							{ name: 'Mu-Law', value: 'mulaw' },
 						],
 						default: 'mp3',
 						description: 'Audio encoding format for the output',
@@ -127,8 +126,7 @@ export class DeepgramSpeaker implements INodeType {
 						type: 'options',
 						options: [
 							{ name: 'WAV', value: 'wav' },
-							{ name: 'MP3', value: 'mp3' }, // Default container often matches encoding
-							// Add others if known/needed
+							{ name: 'MP3', value: 'mp3' },
 						],
 						default: 'mp3',
 						description: 'Container format for the output audio file',
@@ -138,9 +136,9 @@ export class DeepgramSpeaker implements INodeType {
 						name: 'sample_rate',
 						type: 'number',
 						typeOptions: {
-							minValue: 8000, // Common minimum
+							minValue: 8000,
 						},
-						default: 24000, // Common default for TTS, check Deepgram specifics if available
+						default: 24000,
 						description: 'Sample rate of the output audio (e.g., 8000, 16000, 24000)',
 					},
 					{
@@ -148,9 +146,9 @@ export class DeepgramSpeaker implements INodeType {
 						name: 'bit_rate',
 						type: 'number',
 						typeOptions: {
-							minValue: 32000, // Example minimum for reasonable quality
+							minValue: 32000,
 						},
-						default: 128000, // Common default for MP3
+						default: 128000,
 						description: 'Bit rate for compressed audio formats (e.g., MP3)',
 					},
 				],
@@ -163,6 +161,15 @@ export class DeepgramSpeaker implements INodeType {
 				default: 'data',
 				required: true,
 				description: 'Name of the binary property to store the generated audio data',
+			},
+			// --- Output Filename ---
+			{
+				displayName: 'Output Filename',
+				name: 'outputFilename',
+				type: 'string',
+				default: '',
+				description: 'Optional filename for the output binary data (e.g., "speech.mp3"). If empty, a default name will be generated.',
+				placeholder: 'speech.mp3',
 			},
 		],
 	};
@@ -185,6 +192,7 @@ export class DeepgramSpeaker implements INodeType {
 				const model = this.getNodeParameter('model', itemIndex, 'aura-asteria-en') as string;
 				const audioOptions = this.getNodeParameter('audioOptions', itemIndex, {}) as any;
 				const outputPropertyName = this.getNodeParameter('outputBinaryPropertyName', itemIndex, 'data') as string;
+				let outputFilename = this.getNodeParameter('outputFilename', itemIndex, '') as string;
 
 				if (!textToSpeak) {
 					throw new NodeOperationError(this.getNode(), 'Text to Speak cannot be empty.', { itemIndex });
@@ -248,9 +256,17 @@ export class DeepgramSpeaker implements INodeType {
 				}
 				// Add more mappings if needed
 
+				// Determine default filename if not provided
+				if (!outputFilename) {
+					const extension = mimeType.split('/')[1] || 'bin'; // Get extension from MIME type
+					outputFilename = `deepgram_output.${extension}`;
+				}
+
 				// Create binary data object for n8n
 				const binaryData: IBinaryKeyData = {};
-				binaryData[outputPropertyName] = await this.helpers.prepareBinaryData(audioBuffer, undefined, mimeType);
+				// Convert buffer to stream before preparing binary data
+				const audioStream = Readable.from(audioBuffer);
+				binaryData[outputPropertyName] = await this.helpers.prepareBinaryData(audioStream, outputFilename, mimeType);
 
 
 				// Prepare the output item

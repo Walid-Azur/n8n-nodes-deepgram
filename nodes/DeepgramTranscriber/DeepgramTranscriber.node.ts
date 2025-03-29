@@ -187,6 +187,21 @@ export class DeepgramTranscriber implements INodeType {
 				default: 'full',
 				description: 'Choose the desired output format',
 			},
+			{
+				displayName: 'Transcript Field Name',
+				name: 'transcriptFieldName',
+				type: 'string',
+				default: 'transcript',
+				required: true, // Required when transcriptOnly is selected, but default handles it
+				displayOptions: {
+					show: {
+						outputFormat: [
+							'transcriptOnly',
+						],
+					},
+				},
+				description: 'Name of the JSON field to store the transcript text in when "Transcript Only" format is selected',
+			},
 		],
 	};
 
@@ -209,6 +224,7 @@ export class DeepgramTranscriber implements INodeType {
 				const additionalOptions = this.getNodeParameter('options', itemIndex, {}) as any; // Cast to any for flexibility
 				const appendMetadata = this.getNodeParameter('appendMetadata', itemIndex, false) as boolean;
 				const outputFormat = this.getNodeParameter('outputFormat', itemIndex, 'full') as string;
+				const transcriptFieldName = this.getNodeParameter('transcriptFieldName', itemIndex, 'transcript') as string;
 
 				let transcriptionResult;
 				let endpointUsed: string;
@@ -267,15 +283,18 @@ export class DeepgramTranscriber implements INodeType {
 				if (transcriptionResult) {
 					if (outputFormat === 'transcriptOnly') {
 						// Extract transcript text safely using optional chaining and nullish coalescing
-						const transcript = transcriptionResult.results?.channels?.[0]?.alternatives?.[0]?.transcript ?? '';
-						outputJson.transcript = transcript;
+						const transcriptText = transcriptionResult.results?.channels?.[0]?.alternatives?.[0]?.transcript ?? '';
+						// Use the custom field name, ensuring it's a valid key
+						const fieldName = transcriptFieldName.trim() || 'transcript'; // Default to 'transcript' if empty/whitespace
+						outputJson[fieldName] = transcriptText;
 					} else { // outputFormat === 'full'
 						outputJson.deepgramTranscription = transcriptionResult;
 					}
 				} else {
 					// Handle case where transcriptionResult is unexpectedly null or undefined
 					if (outputFormat === 'transcriptOnly') {
-						outputJson.transcript = ''; // Default to empty string
+						const fieldName = transcriptFieldName.trim() || 'transcript';
+						outputJson[fieldName] = ''; // Default to empty string
 					} else {
 						outputJson.deepgramTranscription = null; // Or handle as appropriate
 					}
@@ -291,9 +310,10 @@ export class DeepgramTranscriber implements INodeType {
 					};
 				}
 
+				// Create the new item, excluding the original binary data
 				const newItem: INodeExecutionData = {
 					json: outputJson,
-					binary: items[itemIndex].binary, // Preserve original binary data
+					// binary: items[itemIndex].binary, // Do not preserve original binary data
 					pairedItem: { item: itemIndex },
 				};
 				returnData.push(newItem);

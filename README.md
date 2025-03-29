@@ -63,6 +63,7 @@ Tested with n8n version 1.x.
     *   Choose the desired **Model**.
     *   Configure **Additional Options** as needed (language, punctuate, etc.).
     *   Select the **Output Format**.
+    *   If using "Transcript Only" format, optionally specify a custom **Transcript Field Name** (defaults to `transcript`).
 4.  Connect the node and run your workflow.
 
 ## Resources
@@ -70,6 +71,13 @@ Tested with n8n version 1.x.
 *   [n8n Community Nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
 *   [Deepgram API Documentation](https://developers.deepgram.com/docs)
 *   [GitHub Repository: Walid-Azur/n8n-nodes-deepgram](https://github.com/Walid-Azur/n8n-nodes-deepgram)
+
+## Consulting & Services
+
+For custom node development, workflow automation consulting, or other n8n-related services, please contact:
+
+**Walid Boudabbous** (Acceleate Consulting Estonia)  
+Email: [walid@acceleate.com](mailto:walid@acceleate.com)
 
 ## License
 

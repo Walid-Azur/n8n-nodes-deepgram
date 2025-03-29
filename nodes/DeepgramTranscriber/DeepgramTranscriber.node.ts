@@ -187,6 +187,7 @@ export class DeepgramTranscriber implements INodeType {
 				default: 'full',
 				description: 'Choose the desired output format',
 			},
+			// Added Transcript Field Name property here, inside the main properties array
 			{
 				displayName: 'Transcript Field Name',
 				name: 'transcriptFieldName',
@@ -202,8 +203,8 @@ export class DeepgramTranscriber implements INodeType {
 				},
 				description: 'Name of the JSON field to store the transcript text in when "Transcript Only" format is selected',
 			},
-		],
-	};
+		], // End of properties array
+	}; // End of description object
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();

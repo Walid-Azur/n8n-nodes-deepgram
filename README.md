@@ -1,5 +1,7 @@
 # n8n-nodes-deepgram
 
+![Deepgram N8N Hero](./images/deepgram-n8n-hero.png)
+
 This is an n8n community node package for interacting with the [Deepgram](https://deepgram.com/) API.
 
 It currently includes the following node:
@@ -29,6 +31,8 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 After installing the node, you can use it like any other node. n8n displays the node in the node panel under **Community** > **Installed**.
 
 ## Operations
+
+![Deepgram N8N Flow](./images/deepgram-n8n-flow.png)
 
 *   **Deepgram Transcriber:**
     *   Transcribe audio from a public URL.

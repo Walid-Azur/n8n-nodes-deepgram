@@ -9,7 +9,7 @@ import {
 } from 'n8n-workflow';
 
 import { DeepgramClientOptions, createClient } from '@deepgram/sdk';
-import { Readable } from 'stream'; // Re-import Readable
+// import { Readable } from 'stream'; // No longer needed
 
 // Helper function from Deepgram docs to convert stream to buffer
 // Note: This might need adjustment based on how n8n expects binary data creation
@@ -264,13 +264,8 @@ export class DeepgramSpeaker implements INodeType {
 
 				// Create binary data object for n8n
 				const binaryData: IBinaryKeyData = {};
-				// Convert buffer back to stream
-				const audioStream = Readable.from(audioBuffer);
-				// Attempt to attach filename directly to the stream object (speculative)
-				// Using 'path' as it's sometimes used, but could also be 'filename'
-				(audioStream as any).path = outputFilename;
-				// Pass stream, filename, and mimeType to helper
-				binaryData[outputPropertyName] = await this.helpers.prepareBinaryData(audioStream, outputFilename, mimeType);
+				// Pass the buffer directly, along with filename and mimeType
+				binaryData[outputPropertyName] = await this.helpers.prepareBinaryData(audioBuffer, outputFilename, mimeType);
 
 
 				// Prepare the output item

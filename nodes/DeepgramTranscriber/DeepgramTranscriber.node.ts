@@ -263,13 +263,25 @@ export class DeepgramTranscriber implements INodeType {
 				// Structure the output data based on parameters
 				let outputJson: any = { ...items[itemIndex].json }; // Start with original JSON data
 
-				if (outputFormat === 'transcriptOnly') {
-					// Extract transcript text - adjust path based on actual Deepgram response structure
-					const transcript = transcriptionResult?.results?.channels[0]?.alternatives[0]?.transcript || '';
-					outputJson.transcript = transcript;
-				} else { // outputFormat === 'full'
-					outputJson.deepgramTranscription = transcriptionResult;
+				// Ensure transcriptionResult exists before processing
+				if (transcriptionResult) {
+					if (outputFormat === 'transcriptOnly') {
+						// Extract transcript text safely using optional chaining and nullish coalescing
+						const transcript = transcriptionResult.results?.channels?.[0]?.alternatives?.[0]?.transcript ?? '';
+						outputJson.transcript = transcript;
+					} else { // outputFormat === 'full'
+						outputJson.deepgramTranscription = transcriptionResult;
+					}
+				} else {
+					// Handle case where transcriptionResult is unexpectedly null or undefined
+					if (outputFormat === 'transcriptOnly') {
+						outputJson.transcript = ''; // Default to empty string
+					} else {
+						outputJson.deepgramTranscription = null; // Or handle as appropriate
+					}
+					// Optionally log a warning here
 				}
+
 
 				if (appendMetadata) {
 					outputJson.deepgramMetadata = {

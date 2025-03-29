@@ -4,9 +4,10 @@
 
 This is an n8n community node package for interacting with the [Deepgram](https://deepgram.com/) API.
 
-It currently includes the following node:
+It currently includes the following nodes:
 
 *   **Deepgram Transcriber:** Transcribes pre-recorded audio files using the Deepgram API. Supports providing audio via URL or binary file input.
+*   **Deepgram Speaker (TTS):** Generates audio from text using the Deepgram Speak API (Text-to-Speech).
 
 [n8n](https://n8n.io/) is a fair-code licensed workflow automation platform.
 
@@ -41,10 +42,15 @@ After installing the node, you can use it like any other node. n8n displays the 
     *   Allows specifying additional options like language, punctuation, diarization, smart formatting, keywords, and callback URL.
     *   Optionally append metadata (endpoint, parameters, duration) to the output.
     *   Choose between outputting the full raw transcript or just the transcript text.
+*   **Deepgram Speaker (TTS):**
+    *   Convert input text (up to 2000 characters) into spoken audio.
+    *   Select from various Deepgram Aura voice models.
+    *   Configure audio output options like encoding (MP3, WAV, etc.), container, sample rate, and bit rate.
+    *   Outputs the generated audio as an n8n binary file property.
 
 ## Credentials
 
-Requires Deepgram API credentials.
+Requires Deepgram API credentials. The same credentials work for both the Transcriber and Speaker nodes.
 
 1.  Go to your [Deepgram Console](https://console.deepgram.com/).
 2.  Navigate to **API Keys**.
@@ -69,6 +75,17 @@ Tested with n8n version 1.x.
     *   Select the **Output Format**.
     *   If using "Transcript Only" format, optionally specify a custom **Transcript Field Name** (defaults to `transcript`).
 4.  Connect the node and run your workflow.
+
+### Deepgram Speaker (TTS)
+
+1.  Install the package in your n8n instance.
+2.  Add the **Deepgram Speaker (TTS)** node to your workflow.
+3.  Configure the node properties:
+    *   Enter the **Text to Speak**.
+    *   Choose the desired **Voice Model**.
+    *   Configure **Audio Options** (encoding, container, sample rate, bit rate) as needed.
+    *   Specify the **Output Binary Property** name where the audio data will be stored (defaults to `data`).
+4.  Connect the node and run your workflow. The output item will contain the generated audio in the specified binary property.
 
 ## Resources
 

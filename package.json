@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deepgram",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "n8n community nodes for Deepgram",
   "keywords": [
     "n8n-community-node-package"
@@ -43,7 +43,8 @@
       "dist/credentials/DeepgramApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/DeepgramTranscriber/DeepgramTranscriber.node.js"
+      "dist/nodes/DeepgramTranscriber/DeepgramTranscriber.node.js",
+      "dist/nodes/DeepgramSpeaker/DeepgramSpeaker.node.js"
     ]
   },
   "devDependencies": {

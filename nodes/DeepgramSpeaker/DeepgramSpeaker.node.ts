@@ -46,7 +46,7 @@ export class DeepgramSpeaker implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Deepgram Speaker (TTS)',
 		name: 'deepgramSpeaker',
-		icon: 'file:deepgramSpeaker.icon.svg', // Placeholder icon name
+		icon: 'file:deepgramSpeaker.icon.svg', // Updated to SVG icon
 		group: ['transform'], // Or maybe 'output'?
 		version: 1,
 		description: 'Generates audio from text using Deepgram Speak API (Text-to-Speech)',
